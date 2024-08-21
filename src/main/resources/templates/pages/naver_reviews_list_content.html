@@ -1,30 +1,94 @@
+<div th:fragment="frag_index_content" class="content-wrapper">
 
-<div th:fragment="frag_index_content"  class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">네이버 영화 리뷰 목록</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
 
-	<div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0">Post 목록</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-              </ol>
-            </div><!-- /.col -->
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </div>
-      
-	<section class="content">
-        <div class="container-fluid">
-          <!-- Small boxes (Stat box) -->
-          <div class="row">
-          	<div th:each="review, idx : ${paging}">
-          		<div th:text="${ review.document }"></div>
-          	</div>  
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">네이버 영화 리뷰 테이블</h3>
+              <div class="card-tools">
+                <!--/* 검색 영역 */-->
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                  <div class="input-group-append">
+                    <button type="submit" class="btn btn-default">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body table-responsive p-0">
+              <table class="table table-hover text-nowrap">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Document</th>
+                    <th>Label</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="review, idx : ${paging}">
+                    <td th:text="${ review.id }"></td>
+                    <td th:text="${ review.document }"></td>
+                    <td th:text="${ review.label }"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="card-footer clearfix">
+              <ul class="pagination pagination-sm m-0 float-right">
+                <!--/* 이전, 1페이지씩 쉬프트, 이전페이지가 없다면 비활성처리(disable 속성) */-->
+                <li class="page-item" th:classappend="${ !paging.hasPrevious } ? 'disabled'">
+                	<a class="page-link" th:href="@{|?page=${ paging.number-1 }|}">«</a>
+               	</li>
+                
+                <!--/* 
+                	- 이동가능한 페이지 번호 나열, 전체나열 -> 제시한 페이지 기준, 앞에 5개, 뒤에 5개 
+                	- 로직은 다양하게 구사 가능
+                	- 현재 페이지 번호는 조금 다르게 묘사(두껍게, 색상을 다르게 등등...)
+                	- 노출된 페이지 번호 조건
+                		- 현재 페이지값이 현재페이지-5 이상이고(and, &&), 현재페이지+5 이항니 경우만 포함
+                		- page >= paging.number-5 and page <= paging.number+5
+                		- page >= paging.number-5 and paging.number+5 >= page
+               	*/-->
+                <li th:each="page : ${ #numbers.sequence(0, paging.totalPages-1) }"
+                	th:classappend="${page == paging.number} ? 'active' "
+                	th:if="${ paging.number-5 <= page and page <= paging.number+5 }"
+               		class="page-item">
+                	<a class="page-link" th:href="@{|?page=${ page }|}" 
+                	   th:text="${page+1}"></a>
+               	</li>
+                               
+                <!--/* 다음 */-->
+                <li class="page-item" th:classappend="${ !paging.hasNext } ? 'disabled'">
+                	<a class="page-link" th:href="@{|?page=${ paging.number+1 }|}">»</a>
+               	</li>
+              </ul>
+            </div>
           </div>
-	    </div>
-    </section>
-    
-</div>	
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
