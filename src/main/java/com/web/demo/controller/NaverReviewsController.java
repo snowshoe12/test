@@ -31,4 +31,14 @@ public class NaverReviewsController {
 		model.addAttribute("paging", paging);
 		return "naver_reviews_list";
 	}
+	
+	@GetMapping("/list2")
+	public String list2(Model model,
+			@RequestParam(value="page", defaultValue = "0") int page) {
+		// 1. 특정 페이지(인자)에 해당되는 페이징 데이터 획득
+		Page<NaverReviews> paging = this.naverReviewsService.getList(page);
+		// 2. html에 전달
+		model.addAttribute("paging", paging);
+		return "naver_reviews_list";
+	}
 }

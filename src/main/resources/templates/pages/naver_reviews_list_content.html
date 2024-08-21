@@ -25,14 +25,16 @@
               <h3 class="card-title">네이버 영화 리뷰 테이블</h3>
               <div class="card-tools">
                 <!--/* 검색 영역 */-->
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                  <div class="input-group-append">
-                    <button type="submit" class="btn btn-default">
-                      <i class="fas fa-search"></i>
-                    </button>
-                  </div>
-                </div>
+                <form method="get" th:action="@{/bbs/list2}" id="searchForm">
+	                <div class="input-group input-group-sm" style="width: 150px;">
+	                  <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+	                  <div class="input-group-append">
+	                    <button type="submit" class="btn btn-default" id="searchBtn">
+	                      <i class="fas fa-search"></i>
+	                    </button>
+	                  </div>
+	                </div>
+                </form>
               </div>
             </div>
 
@@ -90,5 +92,27 @@
       </div>
     </div>
   </section>
+	
+  <!-- 자바스크립트 삽입 -->
+  <script type="text/javascript">
+  // js 변수 표기: 키워드(var(변수), let(변수), const(상수)) 변수명
+  // js 변수 타입은 언제 세팅? => 값이 세팅되면 그때 타입이 결정됨,
+	// 순수 js로 기술
+  
+  // 현 문서상에 존재하는 모든 요소들 중에, 클래스 값이 page-link 모든 요소를 다 찾아라
+  // document.getElementsByClassName("page-link"); => $(".page-link");
+	const links = document.getElementsByClassName("page-link");
+  console.log( links );
 
+  // 검색 버튼 클릭 이벤트 잡아서 처리
+  // 검색 버튼을 특정해서, 해당 버튼에 이벤트 등록(재정의) 한다
+  const searchBtn = document.getElementById("searchBtn");
+  searchBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    //하고 싶은 작업 진행
+    console.log("버튼 클릭 이벤트 처리");
+    return false;
+  })
+
+  </script>	
 </div>
