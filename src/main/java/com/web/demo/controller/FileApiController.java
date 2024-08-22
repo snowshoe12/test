@@ -46,14 +46,17 @@ public class FileApiController {
 	@PostMapping("/upload")	
 	@ResponseBody
 	public ResponseEntity<FileUploadResultDto> upload( 
-			//MemberDto member, // 나이, 이름, 주소 정보를 통으로 받아서 전달
+			MemberDto member, // 나이, 이름, 주소 정보를 통으로 받아서 전달
 			@RequestParam("uploadFile") MultipartFile uploadFile, // 파일을 받아서 전달
 			HttpServletRequest req) {
+		// 0. 폼 데이터 확인
+		log.info(member.toString());
+		
 		// 1. 파일 저장할 경로 획득 (여기서는 톰켓내부, 실제는 클라우드의 스토리지 선택)
 		String path     = req.getServletContext().getRealPath(""); // 저장한 위치(서버측)
-		System.out.println("path:" + path);
+		log.info("path:" + path);
 		String filename = uploadFile.getOriginalFilename();	// 파일명
-		System.out.println("filename:" + filename);
+		log.info("filename:" + filename);
 		
 		// 2. 저장 -> 클라우드상의 스토리지에 저장 권장
 		try {

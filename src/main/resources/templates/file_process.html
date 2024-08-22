@@ -5,7 +5,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>파일업로드</title>
-
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -25,7 +24,8 @@
     <!-- /.login-logo -->
     <div class="card">
       <form id="fileForm">
-        
+        <input type="hidden" th:name="${ _csrf.parameterName }" 
+						       th:value="${ _csrf.token }"/>
         <div class="card-body login-card-body">
           <!--더미 데이터-->
           <input type="text" name="age" value="2000"><br>          
@@ -38,8 +38,6 @@
         <div class="card-footer">
           <button id="btnUpload" class="btn btn-success">파일업로드</button>
         </div>
-        <input type="hidden" th:name="${ _csrf.parameterName }" 
-						       th:value="${ _csrf.token }"/>
       </form>
     </div>
   </div>
