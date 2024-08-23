@@ -3,6 +3,7 @@ package com.web.demo.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.demo.entity.Post;
 import com.web.demo.entity.Review;
 
@@ -33,7 +34,7 @@ public class PostForm {
 	@NotEmpty(message="본문 내용을 반드시 입력해야 하는 필수 항목입니다.")
 	private String content;
 	
-	private List<Review> reviewList;
+	//private List<Review> reviewList;
 
 	@Builder
 	public PostForm(String subject,String content) {

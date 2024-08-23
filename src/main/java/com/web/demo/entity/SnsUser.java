@@ -18,7 +18,7 @@ public class SnsUser {
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence_generator3")
-	@SequenceGenerator(name = "sequence_generator3", sequenceName = "sequence_name3", allocationSize = 1)
+    @SequenceGenerator(name = "sequence_generator3", sequenceName = "sequence_name3", allocationSize = 1)
 	private Long id;
 	
 	@Column(unique = true)

@@ -3,6 +3,9 @@
  */
 package com.web.demo.entity;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,8 +23,8 @@ import lombok.ToString;
 public class NaverReviews {
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenxe_generator5")
-	@SequenceGenerator(name="sequence_generator5", sequenceName = "sequence_name5", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence_generator5")
+    @SequenceGenerator(name = "sequence_generator5", sequenceName = "sequence_name5", allocationSize = 1)
 	private Long id;
 	
 	@Column(length = 2048)
@@ -29,3 +32,14 @@ public class NaverReviews {
 	
 	private Integer label;
 }
+
+
+
+
+
+
+
+
+
+
+

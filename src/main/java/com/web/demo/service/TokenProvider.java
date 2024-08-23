@@ -20,9 +20,13 @@ import com.web.demo.exception.DataNotFoundException;
 import com.web.demo.repository.RefreshTokenRepository;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 
 @Service
 public class TokenProvider {
@@ -40,7 +44,7 @@ public class TokenProvider {
     }
     public String reverseGenerateToken(SnsUser user, Duration expiredAt) {
         Date now = new Date();
-        // 현재 시간에서 특정 시간만큼 뺀다 -> 과거 시간 값이 됨
+        // 현재 시간에서 특정 시간만큼 뺀다 -> 과거 시간값이 됨
         return createToken(new Date(now.getTime() - expiredAt.toMillis()), user);
     }
     // 토큰 생성 내부 함수
@@ -60,6 +64,27 @@ public class TokenProvider {
     }
     // 토큰 유효성 검증
     public boolean isValidToken(String token) {
+//    	try {
+//			Jwts.parser()
+//			.setSigningKey(jwtProperties.getSecretKey())
+//			.parseClaimsJws(token);
+//		} catch (SignatureException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (ExpiredJwtException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (UnsupportedJwtException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (MalformedJwtException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IllegalArgumentException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+    	
         try {
             Jwts.parser()
                 .setSigningKey(jwtProperties.getSecretKey())
