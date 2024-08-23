@@ -21,6 +21,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PostForm {
+	@Transient
+	private Integer id;
+	
 	@NotEmpty(message="제목은 반드시 입력해야 하는 필수 항목입니다.")
 	// 디비상 테이블의 해당 컬럼의 크기와 같이 연동, 100Byte 이내 작성 가능
 	@Size(max=100)
@@ -41,6 +44,9 @@ public class PostForm {
 	// id는 자동 생성, 생성시간은 현재시간, 엔티티 생성
 	public Post toEntity() {
 		return new Post(subject, content, LocalDateTime.now());
+	}
+	public Post toEntityModify() {
+		return new Post(id, subject, content, LocalDateTime.now());
 	}
 	
 }

@@ -52,6 +52,14 @@ public class Post {
 		this.content = content;
 		this.createDate = createDate;
 	}
+	public Post(Integer id, String subject, String content, LocalDateTime createDate) {
+		super();
+		this.id = id;
+		this.subject = subject;
+		this.content = content;
+		this.createDate = createDate;
+	}
+	
 	
 	// @Transient => 클레스 속성으로만 존재
 	

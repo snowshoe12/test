@@ -2,13 +2,16 @@ package com.web.demo.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.demo.dto.FileUploadResultDto;
 import com.web.demo.dto.PostForm;
 import com.web.demo.entity.Post;
 import com.web.demo.service.PostService;
@@ -86,10 +89,32 @@ public class RestApiController {
 	}
 	
 	// put -> post 수정 (patch, 스프링 미지원)
+	// post 조회 -> 수정:(post 번호, 제목, 내용)
+	@PutMapping("/post")
+	@Tag(name="포스트 게시판", description = "Post 수정")
+	@Operation(summary = "Post 수정")
+	public FileUploadResultDto update(@RequestBody PostForm postForm) {
+		Post p = postForm.toEntityModify();
+		postService.modify(p);
+		return FileUploadResultDto.builder()
+				.code(1)
+				.message("수정성공")
+				.build();
+	}
 	
 	// delete -> post 삭제
-	
-	 
+	@DeleteMapping("/post/{id}")
+	@Tag(name="포스트 게시판", description = "Post 삭제")
+	@Operation(summary = "Post 삭제")
+	public FileUploadResultDto delete(@PathVariable("id") Integer id) {
+		Post p = postService.getOnePost(id);
+		// p가 없는 경우 예외처리 필요(생략)
+		postService.delete(p);
+		return FileUploadResultDto.builder()
+				.code(1)
+				.message("삭제성공")
+				.build();
+	}
 }
 
 
