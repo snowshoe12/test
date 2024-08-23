@@ -37,12 +37,14 @@ public class SecurityConfig {
 			.authorizeHttpRequests( ( a ) -> a.requestMatchers
 				( new AntPathRequestMatcher("/h2-console/**") ).permitAll() )
 			.authorizeHttpRequests( ( a ) -> a.requestMatchers
+					( new AntPathRequestMatcher("/api/**") ).permitAll() )
+			.authorizeHttpRequests( ( a ) -> a.requestMatchers
 				( new AntPathRequestMatcher("/**") ).authenticated() )		
-			
-			.csrf( (b) -> 
-			b.ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**")))
-			.headers( (c)-> c.addHeaderWriter(new XFrameOptionsHeaderWriter(
-					XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)) )
+			.csrf().disable()
+//			.csrf( (b) -> 
+//			b.ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**")))
+//			.headers( (c)-> c.addHeaderWriter(new XFrameOptionsHeaderWriter(
+//					XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)) )
 			
 			.formLogin((formLogin) -> formLogin
 	                .loginPage("/user/login")
@@ -51,11 +53,11 @@ public class SecurityConfig {
 			.logout((logout) -> logout
 	                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
 	                .logoutSuccessUrl("/user/login")
-	                .invalidateHttpSession(true))			
+	                .invalidateHttpSession(true))	
 			// TODO #0819 : 필터 기능 추가(요청이 처리되기전에 작동하는 필터)
 			.addFilterBefore(new TokenAuthenticationFilter(tokenProvider), 
 					UsernamePasswordAuthenticationFilter.class);
-			
+		
 		;
 		return http.build();
 	}
